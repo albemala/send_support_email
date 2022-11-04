@@ -6,6 +6,8 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
+// TODO rewrite how device and system info are extracted and printed for each platform
+
 Future<String> generateSupportEmail(String email) async {
   final packageInfo = await PackageInfo.fromPlatform();
   final systemInfo = await _generateSystemInfo();
@@ -48,7 +50,6 @@ Future<String> _generateSystemInfo() async {
   }
   if (Platform.isWindows) {
     final info = await deviceInfo.windowsInfo;
-    // TODO improve if possible
     return 'Windows';
   }
   if (Platform.isLinux) {
@@ -78,12 +79,10 @@ Future<String> _generateDeviceInfo() async {
   }
   if (Platform.isWindows) {
     final info = await deviceInfo.windowsInfo;
-    // TODO improve if possible
     return '';
   }
   if (Platform.isLinux) {
     final info = await deviceInfo.linuxInfo;
-    // TODO improve if possible
     return '';
   }
   return '';
