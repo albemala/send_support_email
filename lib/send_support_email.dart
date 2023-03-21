@@ -6,39 +6,41 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
-// TODO rewrite how device and system info are extracted and printed for each platform
-
 Future<String> generateSupportEmail(String email) async {
-  final packageInfo = await PackageInfo.fromPlatform();
-  final systemInfo = await _generateSystemInfo();
-  final deviceInfo = await _generateDeviceInfo();
+  final packageInfo = await generatePackageInfo();
+  final systemInfo = await generateSystemInfo();
+  final deviceInfo = await generateDeviceInfo();
 
   const subject = '';
 
   final body = '''
 ----------------------
 Please do not remove this information, as it helps us to assist you better.
-${packageInfo.appName} ${packageInfo.version}.${packageInfo.buildNumber}
-$systemInfo | $deviceInfo
+$packageInfo
+$systemInfo
+$deviceInfo
 ----------------------
 ''';
 
-  var url = 'mailto:$email';
-  url += '?subject=$subject';
-  url += '&body=${Uri.encodeComponent(body)}';
-
-  return url;
+  return 'mailto:$email?subject=$subject&body=${Uri.encodeComponent(body)}';
 }
 
-Future<String> _generateSystemInfo() async {
+@visibleForTesting
+Future<String> generatePackageInfo() async {
+  final packageInfo = await PackageInfo.fromPlatform();
+  return '${packageInfo.appName} ${packageInfo.version}.${packageInfo.buildNumber}';
+}
+
+@visibleForTesting
+Future<String> generateSystemInfo() async {
   final deviceInfo = DeviceInfoPlugin();
   if (kIsWeb) {
     final info = await deviceInfo.webBrowserInfo;
-    return '${info.userAgent}';
+    return '${info.browserName.name}';
   }
   if (Platform.isAndroid) {
     final info = await deviceInfo.androidInfo;
-    return 'Android ${info.version.baseOS} ${info.version.release} (${info.version.sdkInt})';
+    return 'Android ${info.version.release} (${info.version.sdkInt})';
   }
   if (Platform.isIOS) {
     final info = await deviceInfo.iosInfo;
@@ -50,16 +52,23 @@ Future<String> _generateSystemInfo() async {
   }
   if (Platform.isWindows) {
     final info = await deviceInfo.windowsInfo;
+    // print('----------------------');
+    // print(info.data.entries.map((e) => '${e.key}: ${e.value}').join('\n'));
+    // print('----------------------');
     return 'Windows';
   }
   if (Platform.isLinux) {
     final info = await deviceInfo.linuxInfo;
+    // print('----------------------');
+    // print(info.data.entries.map((e) => '${e.key}: ${e.value}').join('\n'));
+    // print('----------------------');
     return info.prettyName;
   }
   return '';
 }
 
-Future<String> _generateDeviceInfo() async {
+@visibleForTesting
+Future<String> generateDeviceInfo() async {
   final deviceInfo = DeviceInfoPlugin();
   if (kIsWeb) {
     final info = await deviceInfo.webBrowserInfo;
