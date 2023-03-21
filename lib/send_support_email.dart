@@ -52,10 +52,7 @@ Future<String> generateSystemInfo() async {
   }
   if (Platform.isWindows) {
     final info = await deviceInfo.windowsInfo;
-    // print('----------------------');
-    // print(info.data.entries.map((e) => '${e.key}: ${e.value}').join('\n'));
-    // print('----------------------');
-    return 'Windows';
+    return '${info.productName} ${info.displayVersion}';
   }
   if (Platform.isLinux) {
     final info = await deviceInfo.linuxInfo;
