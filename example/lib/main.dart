@@ -25,22 +25,30 @@ class ContentView extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final packageInfo = useFuture(useMemoized(
-      () => generatePackageInfo(),
-      [],
-    ));
-    final systemInfo = useFuture(useMemoized(
-      () => generateSystemInfo(),
-      [],
-    ));
-    final deviceInfo = useFuture(useMemoized(
-      () => generateDeviceInfo(),
-      [],
-    ));
-    final supportEmailContent = useFuture(useMemoized(
-      () => generateSupportEmail('albemala@gmail.com'),
-      [],
-    ));
+    final packageInfo = useFuture(
+      useMemoized(
+        generatePackageInfo,
+        [],
+      ),
+    );
+    final systemInfo = useFuture(
+      useMemoized(
+        generateSystemInfo,
+        [],
+      ),
+    );
+    final deviceInfo = useFuture(
+      useMemoized(
+        generateDeviceInfo,
+        [],
+      ),
+    );
+    final supportEmailContent = useFuture(
+      useMemoized(
+        () => generateSupportEmail('albemala@gmail.com'),
+        [],
+      ),
+    );
 
     return SafeArea(
       child: SingleChildScrollView(
