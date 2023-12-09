@@ -4,20 +4,20 @@ version: 1.2.0
 repository: https://github.com/albemala/send_support_email
 
 environment:
-  sdk: '>=3.0.0 <4.0.0'
-  flutter: ">=3.10.0"
+  sdk: '>=3.2.0 <4.0.0'
+  flutter: ">=3.16.0"
 
 dependencies:
   flutter:
     sdk: flutter
 
-  device_info_plus: ^9.0.2
-  package_info_plus: ^4.0.2
+  device_info_plus: ^9.1.1
+  package_info_plus: ^5.0.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  very_good_analysis: ^5.0.0+1
+  very_good_analysis: ^5.1.0
 
 flutter:
