@@ -4,14 +4,18 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
-Future<String> generateSupportEmail(String email) async {
+Future<String> generateSupportEmail(
+  String email, {
+  String subject = '',
+  String body = '',
+}) async {
   final packageInfo = await generatePackageInfo();
   final systemInfo = await generateSystemInfo();
   final deviceInfo = await generateDeviceInfo();
 
-  const subject = '';
+  final completeBody = '''
+$body
 
-  final body = '''
 ----------------------
 Please do not remove this information, as it helps us to assist you better.
 $packageInfo
@@ -20,13 +24,15 @@ $deviceInfo
 ----------------------
 ''';
 
-  return 'mailto:$email?subject=$subject&body=${Uri.encodeComponent(body)}';
+  return '''
+mailto:$email?subject=$subject&body=${Uri.encodeComponent(completeBody)}''';
 }
 
 @visibleForTesting
 Future<String> generatePackageInfo() async {
   final packageInfo = await PackageInfo.fromPlatform();
-  return '${packageInfo.appName} ${packageInfo.version}.${packageInfo.buildNumber}';
+  return '''
+${packageInfo.appName} ${packageInfo.version}.${packageInfo.buildNumber}''';
 }
 
 @visibleForTesting
