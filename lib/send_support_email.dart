@@ -4,7 +4,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
-Future<String> generateSupportEmail(
+Future<Uri> generateSupportEmail(
   String email, {
   String subject = '',
   String body = '',
@@ -24,8 +24,22 @@ $deviceInfo
 ----------------------
 ''';
 
-  return '''
-mailto:$email?subject=$subject&body=${Uri.encodeComponent(completeBody)}''';
+  return Uri(
+    scheme: 'mailto',
+    path: email,
+    query: _encodeQueryParameters(<String, String>{
+      'subject': subject,
+      'body': completeBody,
+    }),
+  );
+}
+
+String _encodeQueryParameters(Map<String, String> params) {
+  return params.entries.map((entry) {
+    final key = Uri.encodeComponent(entry.key);
+    final value = Uri.encodeComponent(entry.value);
+    return '$key=$value';
+  }).join('&');
 }
 
 @visibleForTesting

@@ -103,7 +103,7 @@ class ContentView extends HookWidget {
                 final emailContent = supportEmailContent.data;
                 if (emailContent == null) return;
 
-                final url = Uri.parse(emailContent);
+                final url = emailContent;
                 final didLaunch = await launchUrl(url);
                 if (!didLaunch) {
                   print('Could not launch $url');
