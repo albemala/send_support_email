@@ -1,6 +1,6 @@
 name: send_support_email
 description: A new Flutter package project.
-version: 2.0.0
+version: 2.0.1
 repository: https://github.com/albemala/send_support_email
 
 environment:
@@ -11,8 +11,8 @@ dependencies:
   flutter:
     sdk: flutter
 
-  device_info_plus: ^9.1.1
-  package_info_plus: ^5.0.1
+  device_info_plus: ^10.1.0
+  package_info_plus: ^8.0.0
 
 dev_dependencies:
   flutter_test:
