@@ -4,14 +4,15 @@ publish_to: 'none'
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.0.0 <4.0.0'
+  sdk: '>=3.5.0 <4.0.0'
+  flutter: ">=3.24.0"
 
 dependencies:
   flutter:
     sdk: flutter
 
   flutter_hooks: ^0.20.5
-  url_launcher: ^6.3.0
+  url_launcher: ^6.3.1
 
   send_support_email:
     path: ../
@@ -20,8 +21,8 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  very_good_analysis: ^5.1.0
-  package_rename: ^1.7.0
+  very_good_analysis: ^6.0.0
+  package_rename: ^1.7.1
 
 flutter:
   uses-material-design: true
